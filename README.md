@@ -1,4 +1,3 @@
-<br \>
 
 <h1 align="center">🔭
 Identification des relations spatiales dans les images en utilisant les réseaux de neurones convolutifs.
@@ -9,6 +8,7 @@ Identification des relations spatiales dans les images en utilisant les réseaux
 <a href="https://zenodo.org/records/8104370)">Dataset SpatialSense </a>
 
 </p>
+
 ### 1 Introduction:
 
 

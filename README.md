@@ -22,12 +22,14 @@ Ces modèles constituent des représentations condensées des données, axées s
 D'autres approches combinant ces modèles ont été étudiés (DRNet, VTransE). L’objectif est d'exploité un ensemble d'informations liées à la position des objets dans l'espace (les boites englobantes), leur apparence ainsi que leurs classes sémantiques,  pour prédire des relations spatiales précises. <br>
    
 L'objectif de notre travail est de classer les configurations spatiales. Pour ce faire, plusieurs modèles ont été implémentés pour modéliser les relations spatiales dans les images. Le premier modèle est basé sur le réseau  VggNet préentrainé pour extraire les caractéristiques des images, suivie d’un perceptron multicouche (MLP) pour la classification des relations spatiale. La deuxième approche est un MLP à trois couches cachées entrainé pour modéliser les configurations spatiales en fonction des coordonnées des boites englobantes des deux objets. La troisième approche est une combinaison des deux premières, et prend en compte pour la classification les informations visuelles (images) ainsi que la position des objets dans l’espace, définie par les coordonnées des boites englobantes. La dernière approche est un modèle qui combine les informations visuelles (images), textuelles (description de l’image) ainsi que les informations  relatives à la position des objets (boites englobantes). Ces modèles sont entraînés sur deux bases de données d’images: SpatialSense et SimpleShapes.<br>
-L’article est organisé comme suit. Dans la section matérielle et méthode, nous décrirons les données utilisées ainsi que les modèles développés. Dans la section résultats et discutions, nous présenterons les résultats des différents modèles utilisés .
+L’article est organisé comme suit. Dans la section matérielle et méthode, nous décrirons les données utilisées ainsi que les modèles développés. Dans la section résultats et discutions, nousprésenteronsles résultats des différents modèles utilisés.
+
   
 </p>
 
 ***
 ###   1. Matériels et méthodes:
 ***
+
 
 

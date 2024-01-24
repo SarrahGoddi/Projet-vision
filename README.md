@@ -1,4 +1,4 @@
-
+<div style="overflow-x: auto; max-width: 100%;">
 <h1 align="center">🔭
 Identification des relations spatiales dans les images en utilisant les réseaux de neurones convolutifs.
 </h1>
@@ -58,13 +58,128 @@ Cette base de données présente de nombreux avantages, notamment en termes de v
 
 #### Modèles de classification d’images (modèle 1): 
 <p align="justify">
-Le modèle utilisé est développé pour classifier les images en fonction de la position relative des objets d’intérêt. Ce modèle prend en entrée des images RGB ou des images segmentées (les éléments segmentés correspondent au sujet et  l’objet).
+Le modèle utilisé est développé pour classifier les images en fonction de la position relative des objets d’intérêt. Ce modèle prend en entrée des images RGB ou des images segmentées (les éléments segmentés correspondent au sujet et  l’objet). <br>
 L'architecture du modèle présenté dans la figure suivante (figure 4) se compose de deux étapes principales : le prétraitement des entrées et la génération du modèle. Dans la phase de prétraitement, les caractéristiques des images sont extraites en utilisant le modèle VGGNet pré-entrainé, modifié pour être entièrement convolutif. Ensuite,  un perceptron multicouche (MLP) à deux couches cachés est entraîné pour détecter les relations spatiales à partir des vecteurs de caractéristiques des images . 
 La première couche du MLP (FC-0) réduit la dimensionalité à 512, et la seconde couches  (FC-1) la réduit davantage à 256. La dernière couche du modèle correspondant a une couche de sortie avec 4 neurones (correspondant au nombre de classes), caractérisée par la fonction d’activation softmax.
 </p>
 <p align="center">
   <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/4d3e322e-3633-4d83-92e3-26a47868d131" alt="Figure 4: Modèle d’apprentissage des relations spatiales entre les objets dans une image (modèle 1: CNN pré-entraîné + MLP)">
 </p>
+
+#### Modèles de classification des boites englobantes (modèle 2):
+<p align="justify">
+   
+   L’architecture du modèle correspond à un MLP à 3 couches cachées (figure 5). La couche d’entrée prend une liste de 16 éléments, qui correspondent aux coordonnées des boites englobantes respectivement pour le sujet et l’objet. Les 3 couches cachées sont composé respectivement de 64, 32 et 16 neurones et utilisent la fonction d'activation ReLU. La dernière couche du réseau est une couche dense avec un nombre de neurones équivalent au nombre de classes (4) que le modèle doit prédire. Elle utilise la fonction d'activation softmax.
+</p>
+
+<p align="center">
+  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/89130972-98d9-48c2-b8bc-430b1ff45065" alt="Figure 5: Modèle de classification des coordonnées des boîtes englobantes (modèle 2, MLP)">
+</p>
+
+#### Modèle de combinaison (modèle 3):
+<p align="justify">
+Ce modèle prend en entrée le modèle de classification d’images ainsi que le modèle de classification des boites englobantes vues précédemment (figure 6) . Les vecteurs de caractéristiques extraites des images et des boites englobantes sont ensuite concaténés. Ainsi, les informations issues des deux modèles sont réunies pour obtenir un modèle de classification plus puissant. La prise de décision se fait par la dernière couche dense qui est ajouté pour permettre la classification.
+</p>
+<p align="center">
+  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/b088b47f-b5b5-41da-8af1-a871274b88c2" alt="Figure 6: Modèle de classification combinant  le modèle de classification des images et des boîtes englobantes (modèle3).">
+</p>
+
+#### Modèle multimodal (modèle 4):
+<p align="justify">
+Ce modèle prend en entrée un ensemble d’images, des coordonnées des boites englobantes ainsi qu’une description textuelle des relations entres les objets d'intérêt dans l’image (figure 7).
+Dans ce modèle, les représentations des mots-clés des phases qui décrivent les images sont utilisées pour réaliser la classification des représentations spatiales. Pour extraire les représentations,  le modèle de langage XLM-Roberta est utilisé pour  obtenir les représentations vectorielles des mots (embeddings) des phrases.
+</p>
+<p align="center">
+  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/4a8870f7-b374-4a6a-8a77-b13274701119" alt="Figure 7: Modèle sémantique de classification (modèle 4).">
+</p>
+
+* ### Les hyperparamètres:
+
+<p align="justify">
+Pour les 3 premiers modèles présentés , la recherche des hyperparamètres a été réaliser en utilisant la méthode  Grid Search couplée a la k-fold cross validation. Cette méthode est définie pour rechercher la valeur du taux d’apprentissage qui maximise la vitesse de convergence du modèle.
+Elle évalue ensuite chaque combinaison par validation croisée pour déterminer celle qui offre les meilleures performances en termes d’accuracy.
+Le graphique suivant (figure 8) représente les résultats d'une recherche d'hyperparamètres utilisant une méthode de type Grid Search. Chaque point correspond à  un taux d'apprentissage différent.
+Tout d’abord, on constate que les valeurs de  learning rate associées à une convergence rapide du modèle sont les valeurs comprises entre 10^-1 et 10^-4. Parmi ces valeurs, la valeur de learning rate qui maximise l’accuracy est égale a 10^-3 (accuracy : 0.75). <br>
+
+Voici un tableau récapitulatif des paramètres des différents modèles (figure 9).
+
+</p>
+
+<p align="center">
+  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/664968c5-d61e-4e36-a258-4aa42730f522" alt="Figure 8: Résultat de la recherche de l’hyperparamètre maximisant la vitesse de convergence du modèle de classifications d’images (modele 1).">
+</p>
+
+<p align="center">
+  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/cdd201ca-61f7-44f3-bacf-23dc4717163f" alt="Figure 9: Hyperparamètres des modèles.">
+</p>
+
+***
+###   2. Résultats et discutions:
+***
+
+* ### Résultats des performances sur le dataset SimpleShapes:
+<p align="justify">
+Les résultats des performances des modèles sur la base SimpleShapes sont présentés ci dessous (figure 10). Les performances des différents modèles sont évalués par l’accuracy. <br>
+Le modèle 1, qui traite les images, montre une convergence rapide (au bout de 6 époques) et une précision élevée ( 0.95). Ce modèle ne présente pas de trace de surapprentissage, comme en témoignent les courbes de précision d'entraînement et de validation proches de l'une de l’autre.
+ Le modèle 2, qui utilise les boîtes englobantes, prend plus de temps pour converger et a une précision moins élevée. En effet, le modèle converge au bout de 45 époques pour une accuracy de 0.9. Cette difference dans le temps de convergence peut être du à  la profondeur du modèle.
+Le modèle 3, combinant images et Bbox, semble offrir des performances similaires au modèle de classification des boites englobantes. Ces résultats indiquent que le modèle qui prend en entrée uniquement les images est le plus performant.
+   
+</p>
+
+<p align="center">
+  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/98147e39-8fbe-45ae-99ba-1de72cd19c4c" alt="Figure 10: Performances des modèles.">
+</p>
+
+* ### Résultats des performances sur le dataset SpatialSense:
+<p align="justify">
+Nous avons évalué les performances du modèle de classification des images (modèles 1) sur les données de SpatialSense. 
+D’après le graphique qui présente la précision d'entraînement et de validation en fonction des époques, on constate que la précision d'entraînement augmente de manière constante, atteignant presque 1, tandis que la précision de validation semble atteindre 0,5. Cette différence entre la courbe des données d'entraînement et de validation suggère un surajustement du modèle (figure 11). <br>
+Les performances du modèle sur un ensemble de données test sont présentées par la matrice de confusion (figure 11). D’après les résultats de la matrice de confusion, on constate que les classes ‘gauche’ et  ‘en dessous de’ ont les taux de classification les plus élevés, tandis que la classe ‘droite’ a le taux le plus bas, et présente une confusion avec la classe ‘gauche’. <br> 
+Les faibles performances du modèle ainsi que la confusion entre la classe   ‘droite’ et ‘gauche’ (données test) sont du aux ambiguïtés de la base SpatialSense. En effet, les performances du modèle de classification d’images (modèle 1) entraîné par les sur les données SimpleShapes montrent de très bons résultat.
+  </p>
+
+<p align="center">
+  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/cb2ea653-d65f-4401-8660-572343db130a" alt="Figure 11: Performances du  modèle de classification d’images (modèle 1) sur les données SpatialSense.">
+</p>
+
+<p align="justify">
+Nous souhaitons savoir si un modèle qui prends en compte plusieurs types  d’informations (modèle 3) peut capturer les relations complexes de la base de données  SpatialSense. Nous testons donc les performances du modèle 3 qui prends en compte les caractéristiques des images et des boîtes englobantes en entrainant d’abord ce modèle sur les données  SpatialSense. Ces performances sont comparées au modèle pré-entraîné avec les données SimpleShapes et affiné avec les données SpatialSense (figure 12). <br>
+Les résultats présentés montrent la comparaison de l’accuracy de deux modèles de classification d’images  (le modèle entraîné de zéro, et le  modèle pré-entraîné sur SimpleShapes, affiné ensuite sur SpatialSense). Le modèle pré-entraîné et affiné surpasse le modèle entraîné de zéro, comme on le voit par des courbes d'exactitude plus élevées pour les ensembles d'entraînement et de validation.  Les matrices de confusion normalisées montrent que le modèle affiné a des performances > 50 % pour l’ensemble des 4 classes. De plus, on constate que l’ambiguïté entre les classe ‘droite’ et ‘gauches’ semble moins visibles pour le modèle pré-entraîné sur SimpleShapes  et affiné SpatialSense. En effet, le modèle affiné prédit correctement la classe ’left’ dans 52% des cas et prédit correctement la classe ‘right’ dans 60% des cas.  À l’inverse, le modèle entraîné de zéro confond pour tous les image test la classe ‘left’ et ‘right’. Ainsi, l’affinement du modèle permet de mieux distinguer les classes ambiguës ‘left’ et ‘right’.
+</p>
+
+<p align="center">
+  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/b4f5881c-6a77-490e-aea0-506351e2f75d" alt="Figure 12">
+</p>
+
+<p align="justify">
+Nous avons aussi évalué le modèle multimodal  qui intègre les caractéristiques des images, des boites englobantes ainsi que les caractéristiques des mots des phrases associées aux images (figure 13). <br>
+Les performances du modèle au cours de l’entraînement augmentent pour les données d’entrainement (jusqu’a 0.7 ) et de validation (jusqu’a 0.4). C’est observation indique que le modèle apprend, mais semble souffrir de surajustement, puisque l'accuracy sur les données validation est significativement inférieure à l'accuracy sur les données d’entraînement. <br>
+La matrice de confusion, qui témoigne des performances du modèle sur un ensemble de test montre que le modèle prédit uniquement  la classe  ‘left’, avec toujours une ambiguïté entre les classes ‘left’ et ‘right’. Ces observations suggèrent que la prise en compte des représentations des mots n’apporte pas d’amélioration par rapport au modèle plus simple (modèle image + Bbox).
+</p>
+
+<p align="center">
+  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/78f3357e-1fd9-46fc-97d3-7b4566576831" alt="Figure 13: Performances du  modèle qui intègre en plus la représentation des mots (modèle 4)">
+</p>
+
+***
+###  Conclusion:
+***
+<p align="justify">
+L’objectif était de réaliser la classification des configurations spatiales. Pour cela, les performances de  4 modèles ont été testées sur deux bases de données, SimpleShapes qui ne présente pas d'ambiguïté et SpatialSense qui présente des erreurs de labélisation. <br> 
+Pour le dataset SimpleShapes, tous les modèles montrent des performances élevées, indiquant un bon ajustement sans surapprentissage (figure 14). Cependant, pour la base de données SpatialSense, le modèle le plus performant reste le modèle qui prend en compte uniquement les caractéristiques des images pour la classification des relations spatiales. Cependant, l'ambiguïté entre les classe ‘gauche’ et ‘droite’ reste fortement apparente (figure 11). L’utilisation du modèle pré-entraîné sur les données SimpleShapes et affiné sur les données SpatialSense permet de réduire cette ambiguïté (figure 12).
+</p>
+
+<p align="center">
+  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/6798e693-387b-41b9-9a33-4a285d247eb3" alt="Figure 14: Performances des modèles sur les données test">
+</p>
+
+
+</div>
+
+
+
+
+
 
 
 

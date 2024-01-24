@@ -19,9 +19,15 @@ La reconnaissance de relations spatiales est utilisée dans plusieurs domaines, 
 De nombreuses approches dans la littérature ont été présentées. On peut citer par exemple les descripteurs classiques relations spatiales, qui incluent les modèles topologiques (modèles basées sur le calcul des connexions des régions, RCC) et directionnels (histogramme des forces).
 Ces modèles constituent des représentations condensées des données, axées sur des aspects spécifiques, tels que la topologie pour le modèle RCC8, la direction pour l’histogramme d’angle, ou des caractéristiques hybrides, comme le R-histogramme qui combine les descripteurs topologiques et directionnels.
    Cependant, les récentes performances des modèles d'apprentissage profond dans diverses taches (reconnaissance d'objets ,classification de scènes, traitement automatique du langage) encouragent l’application de ces modèles dans l'apprentissage automatique des relations directement à partir des images. Ces approches concernent les modèles d’attention textuels (BERT) et visuels (CNN).<br>
-D'autres approches combinant ces modèles ont été étudiés (DRNet, VTransE). L’objectif est d'exploité un ensemble d'informations liées à la position des objets dans l'espace (les boites englobantes), leur apparence ainsi que leurs classes sémantiques,  pour prédire des relations spatiales précises
+D'autres approches combinant ces modèles ont été étudiés (DRNet, VTransE). L’objectif est d'exploité un ensemble d'informations liées à la position des objets dans l'espace (les boites englobantes), leur apparence ainsi que leurs classes sémantiques,  pour prédire des relations spatiales précises. <br>
+   
+L'objectif de notre travail est de classer les configurations spatiales. Pour ce faire, plusieurs modèles ont été implémentés pour modéliser les relations spatiales dans les images. Le premier modèle est basé sur le réseau  VggNet préentrainé pour extraire les caractéristiques des images, suivie d’un perceptron multicouche (MLP) pour la classification des relations spatiale. La deuxième approche est un MLP à trois couches cachées entrainé pour modéliser les configurations spatiales en fonction des coordonnées des boites englobantes des deux objets. La troisième approche est une combinaison des deux premières, et prend en compte pour la classification les informations visuelles (images) ainsi que la position des objets dans l’espace, définie par les coordonnées des boites englobantes. La dernière approche est un modèle qui combine les informations visuelles (images), textuelles (description de l’image) ainsi que les informations  relatives à la position des objets (boites englobantes). Ces modèles sont entraînés sur deux bases de données d’images: SpatialSense et SimpleShapes.<br>
+L’article est organisé comme suit. Dans la section matérielle et méthode, nous décrirons les données utilisées ainsi que les modèles développés. Dans la section résultats et discutions, nous présenterons les résultats des différents modèles utilisés .
   
 </p>
 
+***
+###   1. Matériels et méthodes:
+***
 
 

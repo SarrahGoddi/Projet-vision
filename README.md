@@ -36,7 +36,7 @@ Deux dataset sont utilisés pour entraîner les modèles. Le premier dataset Sim
 </p>
 
 <p align="center">
-  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/cf2022e5-1cb0-48ba-a246-51c76983aafa" alt="Figure 1: Images de la base de données SimpleShapes.">
+<img width="924" alt="Figure 1: Images de la base de données SimpleShapes." src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/063926b1-c81a-4d95-a577-b9cea659bc96">
 </p>
 
 #### Dataset SpatialSense:
@@ -48,7 +48,14 @@ Cette base de données présente de nombreux avantages, notamment en termes de v
 </p>
 
 <p align="center">
-  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/9e212699-2fd3-4113-ba8e-a5708c5f11b7" alt="Figure 2: Images de la base de données SpatialSense qui ne présentent pas d’ ambiguïtés.">
+<img width="924" alt="Figure 2: Images de la base de données SpatialSense qui ne présentent pas d’ ambiguïtés." src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/6f6540ab-8092-44b1-ace9-6aaf55f9f219">
+</p>
+
+
+<p align="center">
+<img width="892" alt="Figure 3:Images de la base de données SpatialSense qui présentent des ambiguïtés." src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/73478712-e7f0-44fc-bc71-4c5fae20e56c">
+
+   
 </p>
 
 * ### Les modèles:
@@ -63,7 +70,8 @@ L'architecture du modèle présenté dans la figure suivante (figure 4) se compo
 La première couche du MLP (FC-0) réduit la dimensionalité à 512, et la seconde couches  (FC-1) la réduit davantage à 256. La dernière couche du modèle correspondant a une couche de sortie avec 4 neurones (correspondant au nombre de classes), caractérisée par la fonction d’activation softmax.
 </p>
 <p align="center">
-  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/4d3e322e-3633-4d83-92e3-26a47868d131" alt="Figure 4: Modèle d’apprentissage des relations spatiales entre les objets dans une image (modèle 1: CNN pré-entraîné + MLP)">
+<img width="591" alt="Figure 4: Modèle d’apprentissage des relations spatiales entre les objets dans une image (modèle 1: CNN pré-entraîné + MLP)" src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/f5494be3-7e4c-436a-8d70-7be944b5a562">
+   
 </p>
 
 #### Modèles de classification des boites englobantes (modèle 2):
@@ -73,15 +81,21 @@ La première couche du MLP (FC-0) réduit la dimensionalité à 512, et la secon
 </p>
 
 <p align="center">
-  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/89130972-98d9-48c2-b8bc-430b1ff45065" alt="Figure 5: Modèle de classification des coordonnées des boîtes englobantes (modèle 2, MLP)">
+  <img width="937" alt="Figure 5: Modèle de classification des coordonnées des boîtes englobantes (modèle 2, MLP)" src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/35192353-e785-4a2e-9abf-b05e9b0a1750">
 </p>
+
+
+
+
+
 
 #### Modèle de combinaison (modèle 3):
 <p align="justify">
 Ce modèle prend en entrée le modèle de classification d’images ainsi que le modèle de classification des boites englobantes vues précédemment (figure 6) . Les vecteurs de caractéristiques extraites des images et des boites englobantes sont ensuite concaténés. Ainsi, les informations issues des deux modèles sont réunies pour obtenir un modèle de classification plus puissant. La prise de décision se fait par la dernière couche dense qui est ajouté pour permettre la classification.
 </p>
 <p align="center">
-  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/b088b47f-b5b5-41da-8af1-a871274b88c2" alt="Figure 6: Modèle de classification combinant  le modèle de classification des images et des boîtes englobantes (modèle3).">
+<img width="848" alt="Figure 6: Modèle de classification combinant  le modèle de classification des images et des boîtes englobantes (modèle3)." src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/959f1b94-f19a-4a35-b006-727ed68d57f8">
+   
 </p>
 
 #### Modèle multimodal (modèle 4):
@@ -90,8 +104,12 @@ Ce modèle prend en entrée un ensemble d’images, des coordonnées des boites 
 Dans ce modèle, les représentations des mots-clés des phases qui décrivent les images sont utilisées pour réaliser la classification des représentations spatiales. Pour extraire les représentations,  le modèle de langage XLM-Roberta est utilisé pour  obtenir les représentations vectorielles des mots (embeddings) des phrases.
 </p>
 <p align="center">
-  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/4a8870f7-b374-4a6a-8a77-b13274701119" alt="Figure 7: Modèle sémantique de classification (modèle 4).">
+  <img width="843" alt="Figure 7: Modèle sémantique de classification (modèle 4)." src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/4472c981-d495-415f-993e-64f2b04014ec">
+
 </p>
+
+
+
 
 * ### Les hyperparamètres:
 
@@ -106,12 +124,20 @@ Voici un tableau récapitulatif des paramètres des différents modèles (figure
 </p>
 
 <p align="center">
-  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/664968c5-d61e-4e36-a258-4aa42730f522" alt="Figure 8: Résultat de la recherche de l’hyperparamètre maximisant la vitesse de convergence du modèle de classifications d’images (modele 1).">
+<img width="763" alt="Figure 8: Résultat de la recherche de l’hyperparamètre maximisant la vitesse de convergence du modèle de classifications d’images (modele 1)." src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/a5561ddd-f46b-4399-80bd-1cc5a9742ee1">
 </p>
 
+
+
+
+
 <p align="center">
-  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/cdd201ca-61f7-44f3-bacf-23dc4717163f" alt="Figure 9: Hyperparamètres des modèles.">
+<img width="763" alt="Figure 9: Hyperparamètres des modèles." src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/2886868c-04a6-4c04-b9a0-e3d72236508e">
 </p>
+
+
+
+
 
 ***
 ###   2. Résultats et discutions:
@@ -127,8 +153,13 @@ Le modèle 3, combinant images et Bbox, semble offrir des performances similaire
 </p>
 
 <p align="center">
-  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/98147e39-8fbe-45ae-99ba-1de72cd19c4c" alt="Figure 10: Performances des modèles.">
+<img width="821" alt="Figure 10: Performances des modèles." src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/6fec1737-fe7f-46f5-97d5-26cf4337bf56">
+   
 </p>
+
+
+
+
 
 * ### Résultats des performances sur le dataset SpatialSense:
 <p align="justify">
@@ -139,8 +170,11 @@ Les faibles performances du modèle ainsi que la confusion entre la classe   ‘
   </p>
 
 <p align="center">
-  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/cb2ea653-d65f-4401-8660-572343db130a" alt="Figure 11: Performances du  modèle de classification d’images (modèle 1) sur les données SpatialSense.">
+<img width="742" alt="Figure 11: Performances du  modèle de classification d’images (modèle 1) sur les données SpatialSense." src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/429b68e1-0deb-4ab4-9511-50f2432c5e4a">
 </p>
+
+
+
 
 <p align="justify">
 Nous souhaitons savoir si un modèle qui prends en compte plusieurs types  d’informations (modèle 3) peut capturer les relations complexes de la base de données  SpatialSense. Nous testons donc les performances du modèle 3 qui prends en compte les caractéristiques des images et des boîtes englobantes en entrainant d’abord ce modèle sur les données  SpatialSense. Ces performances sont comparées au modèle pré-entraîné avec les données SimpleShapes et affiné avec les données SpatialSense (figure 12). <br>
@@ -148,8 +182,9 @@ Les résultats présentés montrent la comparaison de l’accuracy de deux modè
 </p>
 
 <p align="center">
-  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/b4f5881c-6a77-490e-aea0-506351e2f75d" alt="Figure 12">
+  <img width="742" alt="Figure 12" src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/49bc64b0-abe8-4060-8b52-1bd6b30758a4">
 </p>
+
 
 <p align="justify">
 Nous avons aussi évalué le modèle multimodal  qui intègre les caractéristiques des images, des boites englobantes ainsi que les caractéristiques des mots des phrases associées aux images (figure 13). <br>
@@ -157,9 +192,12 @@ Les performances du modèle au cours de l’entraînement augmentent pour les do
 La matrice de confusion, qui témoigne des performances du modèle sur un ensemble de test montre que le modèle prédit uniquement  la classe  ‘left’, avec toujours une ambiguïté entre les classes ‘left’ et ‘right’. Ces observations suggèrent que la prise en compte des représentations des mots n’apporte pas d’amélioration par rapport au modèle plus simple (modèle image + Bbox).
 </p>
 
-<p align="center">
-  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/78f3357e-1fd9-46fc-97d3-7b4566576831" alt="Figure 13: Performances du  modèle qui intègre en plus la représentation des mots (modèle 4)">
+<p align="center">   
+<img width="828" alt="Figure 13: Performances du  modèle qui intègre en plus la représentation des mots (modèle 4)" src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/493ee596-846a-4934-8bbb-1d102674761b">
 </p>
+
+
+
 
 ***
 ###  Conclusion:
@@ -170,8 +208,10 @@ Pour le dataset SimpleShapes, tous les modèles montrent des performances élev�
 </p>
 
 <p align="center">
-  <img src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/6798e693-387b-41b9-9a33-4a285d247eb3" alt="Figure 14: Performances des modèles sur les données test">
+<img width="736" alt="Figure 14: Performances des modèles sur les données test" src="https://github.com/SarrahGoddi/Projet-vision/assets/157230807/a9404662-31bc-412b-a88d-fcbaec374981">
 </p>
+
+
 
 
 </div>
